@@ -4,7 +4,6 @@ import 'package:my_new_app/model/Users.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_screen.dart';
 import 'forgot_password_screen.dart';
-// import 'package:my_new_app/dao/user_dao.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,47 +18,47 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final UserDao _userDao = UserDao();
 
-  Future<void> _login(BuildContext context) async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    String email = _emailController.text;
-    String password = _passwordController.text;
-
-    // Check for SQL injection patterns
-    if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid input detected.')),
-      );
-      return;
-    }
-
-    User? user = await _userDao.getUserByEmail(email);
-
-    if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User not found')),
-      );
-      return;
-    }
-
-    bool isValidUser = await _userDao.validateUser(email, password);
-
-    if (isValidUser) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid email or password')),
-      );
-    }
+ Future<void> _login(BuildContext context) async {
+  if (!_formKey.currentState!.validate()) {
+    return;
   }
+
+  String email = _emailController.text;
+  String password = _passwordController.text;
+
+  if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid input detected.')),
+    );
+    return;
+  }
+
+  User? user = await _userDao.getUserByEmail(email);
+
+  if (user == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('User not found')),
+    );
+    return;
+  }
+
+  bool isValidUser = await _userDao.validateUser(email, password);
+
+  if (isValidUser) {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid email or password')),
+    );
+  }
+}
+
 
   bool _containsSqlInjection(String input) {
     final sqlInjectionPattern = RegExp(r"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|delete|insert|exec|drop|grant|alter|create|truncate|backup)\b)");
@@ -149,6 +148,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   onPressed: () => _login(context),
                   child: const Text('Login'),
+                ),
+              ),
+              
+              
+              
+              
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                    );
+                  },
+                  child: const Text('Login 2'),
                 ),
               ),
             ],

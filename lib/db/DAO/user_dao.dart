@@ -1,5 +1,5 @@
-import 'package:my_new_app/model/Users.dart';
 import 'package:my_new_app/db/db_helper.dart';
+import 'package:my_new_app/model/Users.dart';
 
 class UserDao {
   final DBHelper _dbHelper = DBHelper();

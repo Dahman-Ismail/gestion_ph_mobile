@@ -18,25 +18,25 @@ class DBHelper {
   }
 
   Future<Database> _initDb() async {
-    String path = join(await getDatabasesPath(), 'my_new_app.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            email TEXT UNIQUE,
-            email_verified_at TEXT,
-            password TEXT,
-            roleId INTEGER,
-            remember_token TEXT,
-            created_at TEXT,
-            updated_at TEXT
-          )
-        ''');
-      },
-    );
-  }
+  String path = join(await getDatabasesPath(), 'my_new_app.db');
+  return await openDatabase(
+    path,
+    version: 1,
+    onCreate: (db, version) async {
+      await db.execute('''
+        CREATE TABLE users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          email TEXT NOT NULL UNIQUE,
+          email_verified_at TEXT,
+          password TEXT NOT NULL,
+          roleId INTEGER NOT NULL,
+          remember_token TEXT,
+          created_at TEXT,
+          updated_at TEXT
+        )
+      ''');
+    },
+  );
+}
 }
