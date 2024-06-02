@@ -41,7 +41,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
-import 'package:my_new_app/screen/dashboard_screen.dart';
+import 'package:my_new_app/screen/HomeScreen.dart';
+// import 'package:my_new_app/screen/dashboard_screen.dart';
 import 'package:my_new_app/screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_new_app/model/Users.dart';
@@ -116,7 +117,7 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     if (_isLoggedIn) {
-      return const DashboardScreen();
+      return const HomeScreen();
     } else {
       return const LoginScreen();
     }

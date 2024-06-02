@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'package:my_new_app/model/Users.dart';
+import 'package:my_new_app/screen/HomeScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_screen.dart';
 import 'forgot_password_screen.dart';
@@ -161,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
                   },
                   child: const Text('Login 2'),
