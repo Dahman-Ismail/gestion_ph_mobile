@@ -63,28 +63,9 @@ void initState() {
   super.initState();
   _checkLoginStatus();
   _addTestUser().then((_) {
-    _testLogin();
   });
 }
 
-  void _testLogin() async {
-  // Using the correct credentials of the test user
-  String email = 'test@example.com';
-  String password = 'password123';
-
-  User? user = await _userDao.getUserByEmail(email);
-  if (user == null) {
-    print('Test user not found');
-  } else {
-    print('Test user found: ${user.toMap()}');
-    bool isValidUser = await _userDao.validateUser(email, password);
-    if (isValidUser) {
-      print('Test user credentials are valid');
-    } else {
-      print('Test user credentials are invalid');
-    }
-  }
-}
 
 
   Future<void> _addTestUser() async {
