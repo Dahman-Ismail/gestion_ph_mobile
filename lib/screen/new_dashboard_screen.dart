@@ -43,7 +43,7 @@ class NewDashboardScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const AllProductsScreen()),
+                      MaterialPageRoute(builder: (context) =>  AllProductScreen()),
                     );
                   },
                   child: const Text('See All'),

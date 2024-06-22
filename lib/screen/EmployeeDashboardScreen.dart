@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_new_app/screen/all_emplyee_screen.dart';
 
 class EmployeeDashboardScreen extends StatelessWidget {
   const EmployeeDashboardScreen({Key? key}) : super(key: key);
@@ -16,16 +17,16 @@ class EmployeeDashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: Card(
                       color: Color(0xFF0084FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Add',
                               style: TextStyle(
@@ -45,15 +46,15 @@ class EmployeeDashboardScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Expanded(
                     child: Card(
                       color: Color(0xFFD0D8FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Manage',
                               style: TextStyle(
@@ -90,9 +91,9 @@ class EmployeeDashboardScreen extends StatelessWidget {
                   3: FixedColumnWidth(100),
                 },
                 children: [
-                  TableRow(
+                  const TableRow(
                     decoration: BoxDecoration(color: Color(0xFF0084FF)),
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
@@ -159,7 +160,12 @@ class EmployeeDashboardScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AllEmplyeeScreen()),
+                    );
+                    },
                     child: const Text('See All'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF0084FF),
@@ -168,16 +174,16 @@ class EmployeeDashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: Card(
                       color: Color(0xFF0084FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Messages',
                               style: TextStyle(
@@ -200,13 +206,13 @@ class EmployeeDashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Card(
+              const Card(
                 color: Color(0xFF00FFFF),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'Provider Analysis',
                         style: TextStyle(

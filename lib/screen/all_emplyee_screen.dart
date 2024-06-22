@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_new_app/model/Produit.dart';
 // import 'produit.dart';
 
-class AllProductScreen extends StatelessWidget {
+class AllEmplyeeScreen extends StatelessWidget {
   // Generating a list of fake products
   final List<Produit> products = List.generate(
     10,
