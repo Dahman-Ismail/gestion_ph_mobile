@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/screen/all_products_screen.dart';
-import 'package:my_new_app/screen/new_dashboard_screen.dart';
 // import 'package:fl_chart/fl_chart.dart';
 
 class DashboardScreen extends StatelessWidget {
