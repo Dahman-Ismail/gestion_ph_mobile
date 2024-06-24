@@ -41,7 +41,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
-import 'package:my_new_app/screen/HomeScreen.dart';
+import 'package:my_new_app/screen/home_screen.dart';
 // import 'package:my_new_app/screen/dashboard_screen.dart';
 import 'package:my_new_app/screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,20 +69,20 @@ void initState() {
 
 
   Future<void> _addTestUser() async {
-  User testUser = User(
-    name: 'Test User',
-    email: 'test@example.com',
-    password: 'password123',
-    roleId: 1,
-  );
-  print("Adding test user: ${testUser.toMap()}");
-  User? existingUser = await _userDao.getUserByEmail(testUser.email);
-  if (existingUser == null) {
-    await _userDao.insertUser(testUser);
-    print("Test user added successfully");
-  } else {
-    print("Test user already exists: ${existingUser.toMap()}");
-  }
+    User testUser = User(
+      name: 'Test User',
+      email: 'test@example.com',
+      password: 'password123',
+      roleId: 1,
+    );
+    print("Adding test user: ${testUser.toMap()}");
+    User? existingUser = await _userDao.getUserByEmail(testUser.email);
+    if (existingUser == null) {
+      await _userDao.insertUser(testUser);
+      print("Test user added successfully");
+    } else {
+      print("Test user already exists: ${existingUser.toMap()}");
+    }
 }
 
 

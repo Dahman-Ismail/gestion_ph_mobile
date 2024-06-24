@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_new_app/screen/all_products_screen.dart';
 
 class ProductDashboardScreen extends StatelessWidget {
   const ProductDashboardScreen({Key? key}) : super(key: key);
@@ -16,16 +17,16 @@ class ProductDashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: Card(
                       color: Color(0xFF0084FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Order',
                               style: TextStyle(
@@ -45,15 +46,15 @@ class ProductDashboardScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Expanded(
                     child: Card(
                       color: Color(0xFFD0D8FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Providers',
                               style: TextStyle(
@@ -90,9 +91,9 @@ class ProductDashboardScreen extends StatelessWidget {
                   3: FixedColumnWidth(100),
                 },
                 children: [
-                  TableRow(
+                  const TableRow(
                     decoration: BoxDecoration(color: Color(0xFF0084FF)),
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
@@ -159,7 +160,12 @@ class ProductDashboardScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AllProductScreen()),
+                    );
+                    },
                     child: const Text('See All'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF0084FF),  // The blue color from your image
@@ -168,16 +174,16 @@ class ProductDashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: Card(
                       color: Color(0xFF0084FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Manage',
                               style: TextStyle(
@@ -197,15 +203,15 @@ class ProductDashboardScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Expanded(
                     child: Card(
                       color: Color(0xFFD0D8FF),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Discounts',
                               style: TextStyle(
@@ -228,13 +234,13 @@ class ProductDashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Card(
+              const Card(
                 color: Color(0xFF00FFFF),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'Products Analysis',
                         style: TextStyle(

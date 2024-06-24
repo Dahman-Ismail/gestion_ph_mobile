@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/screen/EmployeeDashboardScreen.dart';
-import 'package:my_new_app/screen/ProductDashboardScreen.dart';
-import 'SettingsScreen.dart';
+import 'package:my_new_app/screen/employee_dashboard_screen.dart';
+import 'package:my_new_app/screen/product_ashboard_screen.dart';
+import 'settings_screen.dart';
 import 'dashboard_screen.dart';
 // import 'product_dashboard_screen.dart';
 // import 'employee_dashboard_screen.dart';
