@@ -37,12 +37,12 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'],
+      id: map['id']!= null ? map['id'] as int : null,
       name: map['name'],
       email: map['email'],
       emailVerifiedAt: map['email_verified_at'],
       password: map['password'],
-      roleId: map['roleId'],
+      roleId: map['roleId'] != null ? map['roleId'] as int : 0,
       rememberToken: map['remember_token'],
       createdAt: map['created_at'],
       updatedAt: map['updated_at'],

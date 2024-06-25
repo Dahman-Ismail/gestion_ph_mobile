@@ -70,6 +70,7 @@ void initState() {
 
   Future<void> _addTestUser() async {
     User testUser = User(
+      id: 4,
       name: 'Test User',
       email: 'test@example.com',
       password: 'password123',
