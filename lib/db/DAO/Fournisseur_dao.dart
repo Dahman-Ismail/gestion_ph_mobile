@@ -19,5 +19,15 @@ class FournisseurDao {
     });
   }
 
+  Future<int> updateFournisseur(Fournisseur fournisseur) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'fournisseur',
+      fournisseur.toMap(),
+      where: 'id = ?',
+      whereArgs: [fournisseur.id],
+    );
+  }
+
   
 }

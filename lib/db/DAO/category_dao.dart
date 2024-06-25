@@ -18,5 +18,16 @@ class CategoryDao {
     });
   }
 
+  Future<int> updateCategory(Category category) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'category',
+      category.toMap(),
+      where: 'id = ?',
+      whereArgs: [category.id],
+    );
+  }
+
+
   
 }

@@ -20,5 +20,15 @@ class ProduitDao {
     });
   }
 
+   Future<int> updateProduit(Produit produit) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'produit',
+      produit.toMap(),
+      where: 'id = ?',
+      whereArgs: [produit.id],
+    );
+  }
+
   
 }

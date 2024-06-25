@@ -21,4 +21,14 @@ class OperationDao {
     });
   }
 
+  Future<int> updateOperation(Operation operation) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'operation',
+      operation.toMap(),
+      where: 'id = ?',
+      whereArgs: [operation.id],
+    );
+  }
+
 }

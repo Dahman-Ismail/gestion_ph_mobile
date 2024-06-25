@@ -19,5 +19,14 @@ class RoleDao {
     });
   }
 
+  Future<int> updateRole(Role role) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'roles',
+      role.toMap(),
+      where: 'id = ?',
+      whereArgs: [role.id],
+    );
+  }
   
 }

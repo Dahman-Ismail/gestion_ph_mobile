@@ -27,6 +27,17 @@ class UserDao {
     return null;
   }
 
+  Future<int> updateUser(User user) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'users',
+      user.toMap(),
+      where: 'id = ?',
+      whereArgs: [user.id],
+    );
+  }
+
+
   Future<bool> validateUser(String email, String password) async {
     User? user = await getUserByEmail(email);
     if (user != null && user.password == password) {
