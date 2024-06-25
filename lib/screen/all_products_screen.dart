@@ -19,8 +19,7 @@ class AllProductScreen extends StatelessWidget {
       categoryId: 5 + index,
       description: 'Description for product $index. This is an excellent product that meets your needs.',
       expirrationDate: '2024-12-${10 + index}',
-      createdAt: '2024-01-01',
-      updatedAt: '2024-06-01',
+      quantitePiece: 20,
     ),
   );
 
@@ -63,8 +62,8 @@ class AllProductScreen extends StatelessWidget {
               Text('Discount: ${product.discount}%'),
               Text('Category ID: ${product.categoryId}'),
               Text('Expiration Date: ${product.expirrationDate}'),
-              if (product.createdAt != null) Text('Created At: ${product.createdAt}'),
-              if (product.updatedAt != null) Text('Updated At: ${product.updatedAt}'),
+              Text('quantitePiece is: ${product.quantitePiece}'),
+              
             ],
           ),
         );

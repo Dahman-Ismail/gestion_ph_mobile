@@ -10,8 +10,7 @@ class Produit {
   int categoryId;
   String description;
   String expirrationDate;
-  String? createdAt;
-  String? updatedAt;
+  int quantitePiece;
 
   Produit({
     this.id,
@@ -25,8 +24,7 @@ class Produit {
     required this.categoryId,
     required this.description,
     required this.expirrationDate,
-    this.createdAt,
-    this.updatedAt,
+    required this.quantitePiece,
   });
 
   Map<String, dynamic> toMap() {
@@ -42,8 +40,7 @@ class Produit {
       'CategoryId': categoryId,
       'Description': description,
       'ExpirrationDate': expirrationDate,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
+       'QuantitePiece': quantitePiece,
     };
   }
 
@@ -60,8 +57,7 @@ class Produit {
       categoryId: map['CategoryId'],
       description: map['Description'],
       expirrationDate: map['ExpirrationDate'],
-      createdAt: map['created_at'],
-      updatedAt: map['updated_at'],
+      quantitePiece: map['QuantitePiece'],
     );
   }
 }
