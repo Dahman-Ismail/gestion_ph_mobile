@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/screen/all_emplyee_screen.dart';
+import 'package:my_new_app/screen/all_mployee_screen.dart';
 
 class EmployeeDashboardScreen extends StatelessWidget {
   const EmployeeDashboardScreen({Key? key}) : super(key: key);
@@ -163,7 +163,7 @@ class EmployeeDashboardScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AllEmplyeeScreen()),
+                      MaterialPageRoute(builder: (context) => AllEmployeeScreen()),
                     );
                     },
                     child: const Text('See All'),

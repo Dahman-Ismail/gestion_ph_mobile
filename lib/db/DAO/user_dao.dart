@@ -4,6 +4,15 @@ import 'package:my_new_app/model/Users.dart';
 class UserDao {
   final DBHelper _dbHelper = DBHelper();
 
+  Future<List<User>> getUsers() async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query('users');
+
+    return List.generate(maps.length, (i) {
+      return User.fromMap(maps[i]);
+    });
+  }
+
   Future<int> insertUser(User user) async {
     final db = await _dbHelper.database;
     int result = await db.insert('users', user.toMap());

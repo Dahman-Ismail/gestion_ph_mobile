@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/db/dao/produit_dao.dart'; // Import your DAO here
-import 'package:my_new_app/model/Produit.dart'; // Replace with the correct path to your Produit model
+import 'package:my_new_app/db/dao/user_dao.dart'; // Import your DAO here
+import 'package:my_new_app/model/Users.dart'; // Replace with the correct path to your User model
 
-class AllProductScreen extends StatefulWidget {
+class AllEmployeeScreen extends StatefulWidget {
   @override
-  _AllProductScreenState createState() => _AllProductScreenState();
+  _AllEmployeeScreenState createState() => _AllEmployeeScreenState();
 }
 
-class _AllProductScreenState extends State<AllProductScreen> {
-  late Future<List<Produit>> _futureProducts;
+class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
+  late Future<List<User>> _futureUsers;
 
   @override
   void initState() {
     super.initState();
-    _futureProducts = _fetchProducts(); // Fetching products asynchronously
+    _futureUsers = _fetchUsers(); // Fetching users asynchronously
   }
 
-  Future<List<Produit>> _fetchProducts() async {
-    final productDao = ProduitDao(); // Instantiate your DAO
-    return await productDao.getProduits(); // Replace with your actual method to get products
+  Future<List<User>> _fetchUsers() async {
+    final userDao = UserDao(); // Instantiate your DAO
+    return await userDao.getUsers(); // Replace with your actual method to get users
   }
 
-  void _showProductDetails(BuildContext context, Produit product) {
+  void _showUserDetails(BuildContext context, User user) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows the bottom sheet to be full-screen if needed
@@ -49,36 +49,34 @@ class _AllProductScreenState extends State<AllProductScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 20),
                     Center(
                       child: Image.network(
-                        product.image,
+                        'https://via.placeholder.com/150', // Placeholder image URL
                         height: 150,
                         width: 150,
                       ),
                     ),
                     SizedBox(height: 16),
                     Text(
-                      product.name,
+                      user.name,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 8),
-                    Text(product.description),
-                    SizedBox(height: 8),
-                    Text(
-                      'Price: \$${product.price.toStringAsFixed(2)}',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8),
-                    Text('Barcode: ${product.barCode}'),
-                    Text('Quantity: ${product.quantite}'),
-                    Text('Discount: ${product.discount}%'),
-                    Text('Category ID: ${product.categoryId}'),
-                    Text('Expiration Date: ${product.expirrationDate}'),
-                    Text('Quantité par pièce: ${product.quantitePiece}'),
+                    Text('Email: ${user.email}'),
+                    if (user.emailVerifiedAt != null)
+                      Text('Email Verified At: ${user.emailVerifiedAt}'),
+                    Text('Role ID: ${user.roleId}'),
+                    if (user.rememberToken != null)
+                      Text('Remember Token: ${user.rememberToken}'),
+                    if (user.createdAt != null)
+                      Text('Created At: ${user.createdAt}'),
+                    if (user.updatedAt != null)
+                      Text('Updated At: ${user.updatedAt}'),
+                    SizedBox(height: 15),
                   ],
                 ),
               ),
@@ -93,34 +91,32 @@ class _AllProductScreenState extends State<AllProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Products'),
+        title: Text('All Employees'),
       ),
-      body: FutureBuilder<List<Produit>>(
-        future: _futureProducts,
+      body: FutureBuilder<List<User>>(
+        future: _futureUsers,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No products available.'));
+            return Center(child: Text('No employees available.'));
           }
 
-          final products = snapshot.data!;
+          final users = snapshot.data!;
           return ListView.builder(
-            itemCount: products.length,
+            itemCount: users.length,
             itemBuilder: (context, index) {
-              final product = products[index];
+              final user = users[index];
               return ListTile(
-                leading: Image.network(
-                  product.image,
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage('https://via.placeholder.com/50'), // Placeholder image URL
+                  radius: 25,
                 ),
-                title: Text(product.name),
-                subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-                onTap: () => _showProductDetails(context, product),
+                title: Text(user.name),
+                subtitle: Text(user.email),
+                onTap: () => _showUserDetails(context, user),
               );
             },
           );
