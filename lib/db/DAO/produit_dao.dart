@@ -48,5 +48,10 @@ class ProduitDao {
     );
   }
 
+  Future<void> deleteAllProduits() async {
+    final db = await _dbHelper.database;
+    await db.delete('produit');
+  }
+
   
 }

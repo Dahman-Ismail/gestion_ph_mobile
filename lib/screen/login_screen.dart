@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'package:my_new_app/model/Users.dart';
 import 'package:my_new_app/screen/home_screen.dart';
@@ -48,6 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
   if (isValidUser) {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
+    await prefs.setString('email', email);
+    await prefs.setString('name', user.name);
 
     Navigator.pushReplacement(
       context,
