@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';// Import your DAO here
+import 'package:flutter/material.dart'; // Import your DAO here
 import 'package:my_new_app/db/DAO/produit_dao.dart';
 import 'package:my_new_app/model/Produit.dart'; // Replace with the correct path to your Produit model
 
@@ -20,22 +20,26 @@ class _AllProductScreenState extends State<AllProductScreen> {
 
   Future<List<Produit>> _fetchProducts() async {
     final productDao = ProduitDao(); // Instantiate your DAO
-    return await productDao.getProduits(); // Replace with your actual method to get products
+    return await productDao
+        .getProduits(); // Replace with your actual method to get products
   }
 
   void _showProductDetails(BuildContext context, Produit product) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Allows the bottom sheet to be full-screen if needed
+      isScrollControlled:
+          true, // Allows the bottom sheet to be full-screen if needed
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.5, // Initial height as a fraction of screen height
+          initialChildSize:
+              0.5, // Initial height as a fraction of screen height
           minChildSize: 0.3, // Minimum height as a fraction of screen height
           maxChildSize: 0.8, // Maximum height as a fraction of screen height
           expand: false, // Do not expand to full screen initially
           builder: (context, scrollController) {
             return SingleChildScrollView(
-              controller: scrollController, // Allows for scrolling inside the bottom sheet
+              controller:
+                  scrollController, // Allows for scrolling inside the bottom sheet
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -71,15 +75,20 @@ class _AllProductScreenState extends State<AllProductScreen> {
                     Text(product.description),
                     const SizedBox(height: 8),
                     Text(
-                      'Price: \$${product.price.toStringAsFixed(2)}',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      'Price: \$${product.PrixVente.toStringAsFixed(2)}',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
+                    Text('id: ${product.id}'),
+                    Text('fournisseurId: ${product.fournisseurId}'),
+                    Text('image: ${product.image}'),
+                    Text('prix: ${product.PrixAchat}'),
                     Text('Barcode: ${product.barCode}'),
                     Text('Quantity: ${product.quantite}'),
                     Text('Discount: ${product.discount}%'),
                     Text('Category ID: ${product.categoryId}'),
-                    Text('Expiration Date: ${product.expirrationDate}'),
+                    Text('Expiration Date: ${product.expirationDate}'),
                     Text('Quantité par pièce: ${product.quantitePiece}'),
                   ],
                 ),
@@ -121,7 +130,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                   fit: BoxFit.cover,
                 ),
                 title: Text(product.name),
-                subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
+                subtitle: Text('\$${product.PrixVente.toStringAsFixed(2)}'),
                 onTap: () => _showProductDetails(context, product),
               );
             },

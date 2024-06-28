@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Import your Product model
 import 'package:my_new_app/screen/all_products_screen.dart';
 
 class ProductDashboardScreen extends StatelessWidget {
@@ -9,7 +9,8 @@ class ProductDashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products Dashboard'),
-        backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
+        backgroundColor:
+            const Color(0xFF0084FF), // The blue color from your image
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -98,28 +99,32 @@ class ProductDashboardScreen extends StatelessWidget {
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'N.',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Name',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Quantity',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Price',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -154,7 +159,8 @@ class ProductDashboardScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
+                      backgroundColor: const Color(
+                          0xFF0084FF), // The blue color from your image
                     ),
                     child: const Text('12,404 other product'),
                   ),
@@ -162,12 +168,14 @@ class ProductDashboardScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AllProductScreen()),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AllProductScreen()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
+                      backgroundColor: const Color(
+                          0xFF0084FF), // The blue color from your image
                     ),
                     child: const Text('See All'),
                   ),

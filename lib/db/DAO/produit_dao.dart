@@ -12,7 +12,7 @@ class ProduitDao {
     final db = await _dbHelper.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
-      'produits',
+      'produit',
       where: 'barCode = ?',
       whereArgs: [barCode],
     );
@@ -46,6 +46,11 @@ class ProduitDao {
       where: 'id = ?',
       whereArgs: [produit.id],
     );
+  }
+
+  Future<void> deleteAllProduits() async {
+    final db = await _dbHelper.database;
+    await db.delete('produit');
   }
 
   

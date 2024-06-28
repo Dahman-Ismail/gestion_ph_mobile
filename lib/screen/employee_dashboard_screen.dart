@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/screen/all_mployee_screen.dart';
+import 'package:my_new_app/screen/all_mployee_screen.dart'; 
 
 class EmployeeDashboardScreen extends StatelessWidget {
   const EmployeeDashboardScreen({super.key});

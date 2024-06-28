@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const DashboardScreen(),
     const ProductDashboardScreen(),
     const EmployeeDashboardScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -56,7 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: const Color.fromARGB(255, 146, 75, 75),
         unselectedItemColor: const Color.fromARGB(137, 221, 8, 8),
-        backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
+        backgroundColor:
+            const Color(0xFF0084FF), // The blue color from your image
         onTap: _onItemTapped,
       ),
     );

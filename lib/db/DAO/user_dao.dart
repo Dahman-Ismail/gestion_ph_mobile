@@ -47,6 +47,11 @@ class UserDao {
   }
 
 
+  Future<void> deleteAllUsers() async {
+    final db = await _dbHelper.database;
+    await db.delete('users');
+  }
+
   Future<bool> validateUser(String email, String password) async {
     User? user = await getUserByEmail(email);
     if (user != null && user.password == password) {
