@@ -20,6 +20,7 @@ dependencies:
   sqflite: ^2.3.3+1
   path: ^1.8.0
   http: ^1.2.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +36,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
       - assets/logo.png
+      - assets/Group 9.png
 
  
   # example:

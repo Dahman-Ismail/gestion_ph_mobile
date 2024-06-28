@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/db/dao/user_dao.dart'; // Import your DAO here
+import 'package:my_new_app/db/DAO/user_dao.dart'; // Import your DAO here
 import 'package:my_new_app/model/Users.dart'; // Replace with the correct path to your User model
 
 class AllEmployeeScreen extends StatefulWidget {
+  const AllEmployeeScreen({super.key});
+
   @override
-  _AllEmployeeScreenState createState() => _AllEmployeeScreenState();
+  State<AllEmployeeScreen> createState() => _AllEmployeeScreenState();
 }
 
 class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
@@ -40,7 +42,7 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
+                    const Center(
                       child: Card(
                         color: Color.fromARGB(255, 45, 50, 55),
                         child: SizedBox(
@@ -49,7 +51,7 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Center(
                       child: Image.network(
                         'https://via.placeholder.com/150', // Placeholder image URL
@@ -57,15 +59,15 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
                         width: 150,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
                       user.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text('Email: ${user.email}'),
                     if (user.emailVerifiedAt != null)
                       Text('Email Verified At: ${user.emailVerifiedAt}'),
@@ -76,7 +78,7 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
                       Text('Created At: ${user.createdAt}'),
                     if (user.updatedAt != null)
                       Text('Updated At: ${user.updatedAt}'),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),
@@ -91,17 +93,17 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Employees'),
+        title: const Text('All Employees'),
       ),
       body: FutureBuilder<List<User>>(
         future: _futureUsers,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No employees available.'));
+            return const Center(child: Text('No employees available.'));
           }
 
           final users = snapshot.data!;
@@ -110,7 +112,7 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
             itemBuilder: (context, index) {
               final user = users[index];
               return ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundImage: NetworkImage('https://via.placeholder.com/50'), // Placeholder image URL
                   radius: 25,
                 ),

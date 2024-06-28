@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_new_app/screen/all_products_screen.dart';
 
 class ProductDashboardScreen extends StatelessWidget {
-  const ProductDashboardScreen({Key? key}) : super(key: key);
+  const ProductDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products Dashboard'),
-        backgroundColor: Color(0xFF0084FF),  // The blue color from your image
+        backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -153,12 +153,12 @@ class ProductDashboardScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    child: const Text('12,404 other product'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF0084FF),  // The blue color from your image
+                      backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
                     ),
+                    child: const Text('12,404 other product'),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -166,10 +166,10 @@ class ProductDashboardScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AllProductScreen()),
                     );
                     },
-                    child: const Text('See All'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF0084FF),  // The blue color from your image
+                      backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
                     ),
+                    child: const Text('See All'),
                   ),
                 ],
               ),

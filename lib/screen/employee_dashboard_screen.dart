@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_new_app/screen/all_mployee_screen.dart';
 
 class EmployeeDashboardScreen extends StatelessWidget {
-  const EmployeeDashboardScreen({Key? key}) : super(key: key);
+  const EmployeeDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Employee Dashboard'),
-        backgroundColor: Color(0xFF0084FF),
+        backgroundColor: const Color(0xFF0084FF),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -153,12 +153,12 @@ class EmployeeDashboardScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    child: const Text('120 other user'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF0084FF),
+                      backgroundColor: const Color(0xFF0084FF),
                     ),
+                    child: const Text('120 other user'),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -166,10 +166,10 @@ class EmployeeDashboardScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AllEmployeeScreen()),
                     );
                     },
-                    child: const Text('See All'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF0084FF),
+                      backgroundColor: const Color(0xFF0084FF),
                     ),
+                    child: const Text('See All'),
                   ),
                 ],
               ),

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_new_app/db/DAO/produit_dao.dart';
+import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'dart:convert';
-import 'package:my_new_app/db/dao/produit_dao.dart';
-import 'package:my_new_app/db/dao/user_dao.dart';
 import 'package:my_new_app/model/Produit.dart';
 import 'package:my_new_app/model/Users.dart';
 

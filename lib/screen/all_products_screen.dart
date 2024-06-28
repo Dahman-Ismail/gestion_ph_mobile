@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:my_new_app/db/dao/produit_dao.dart'; // Import your DAO here
+import 'package:flutter/material.dart';// Import your DAO here
+import 'package:my_new_app/db/DAO/produit_dao.dart';
 import 'package:my_new_app/model/Produit.dart'; // Replace with the correct path to your Produit model
 
 class AllProductScreen extends StatefulWidget {
+  const AllProductScreen({super.key});
+
   @override
-  _AllProductScreenState createState() => _AllProductScreenState();
+  State<AllProductScreen> createState() => _AllProductScreenState();
 }
 
 class _AllProductScreenState extends State<AllProductScreen> {
@@ -40,7 +42,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
+                    const Center(
                       child: Card(
                         color: Color.fromARGB(255, 45, 50, 55),
                         child: SizedBox(
@@ -49,7 +51,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Center(
                       child: Image.network(
                         product.image,
@@ -57,22 +59,22 @@ class _AllProductScreenState extends State<AllProductScreen> {
                         width: 150,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
                       product.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(product.description),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       'Price: \$${product.price.toStringAsFixed(2)}',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text('Barcode: ${product.barCode}'),
                     Text('Quantity: ${product.quantite}'),
                     Text('Discount: ${product.discount}%'),
@@ -93,17 +95,17 @@ class _AllProductScreenState extends State<AllProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Products'),
+        title: const Text('All Products'),
       ),
       body: FutureBuilder<List<Produit>>(
         future: _futureProducts,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No products available.'));
+            return const Center(child: Text('No products available.'));
           }
 
           final products = snapshot.data!;

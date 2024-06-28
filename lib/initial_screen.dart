@@ -42,16 +42,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'package:my_new_app/screen/home_screen.dart';
-// import 'package:my_new_app/screen/dashboard_screen.dart';
 import 'package:my_new_app/screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_new_app/model/Users.dart';
 
 class InitialScreen extends StatefulWidget {
-  const InitialScreen({Key? key}) : super(key: key);
+  const InitialScreen({super.key});
 
   @override
-  _InitialScreenState createState() => _InitialScreenState();
+  State<InitialScreen> createState() => _InitialScreenState();
 }
 
 class _InitialScreenState extends State<InitialScreen> {
@@ -75,13 +74,13 @@ void initState() {
       password: 'password123',
       roleId: 1,
     );
-    print("Adding test user: ${testUser.toMap()}");
+    debugPrint("Adding test user: ${testUser.toMap()}");
     User? existingUser = await _userDao.getUserByEmail(testUser.email);
     if (existingUser == null) {
       await _userDao.insertUser(testUser);
-      print("Test user added successfully");
+      debugPrint("Test user added successfully");
     } else {
-      print("Test user already exists: ${existingUser.toMap()}");
+      debugPrint("Test user already exists: ${existingUser.toMap()}");
     }
 }
 

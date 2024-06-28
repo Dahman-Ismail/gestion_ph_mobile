@@ -8,20 +8,20 @@ import 'dashboard_screen.dart';
 // import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    DashboardScreen(),
-    ProductDashboardScreen(),
-    EmployeeDashboardScreen(),
-    SettingsScreen(),
+    const DashboardScreen(),
+    const ProductDashboardScreen(),
+    const EmployeeDashboardScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -55,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color.fromARGB(255, 146, 75, 75),
-        unselectedItemColor: Color.fromARGB(137, 221, 8, 8),
-        backgroundColor: Color(0xFF0084FF),  // The blue color from your image
+        unselectedItemColor: const Color.fromARGB(137, 221, 8, 8),
+        backgroundColor: const Color(0xFF0084FF),  // The blue color from your image
         onTap: _onItemTapped,
       ),
     );
