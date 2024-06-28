@@ -170,7 +170,7 @@ class ProductDashboardScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AllProductScreen()),
+                            builder: (context) => const AllProductScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

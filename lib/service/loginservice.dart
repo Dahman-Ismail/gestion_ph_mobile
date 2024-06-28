@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_new_app/db/DAO/produit_dao.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';

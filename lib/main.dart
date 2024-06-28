@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'initial_screen.dart';
@@ -7,12 +9,10 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
-  
   const MainApp({super.key});
-    
+
   @override
   Widget build(BuildContext context) {
-    GoogleFonts.config.allowRuntimeFetching = false;
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
       title: 'PMSControl',
@@ -39,15 +39,25 @@ class MainApp extends StatelessWidget {
           labelMedium: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: Color.fromARGB(255, 153, 145, 145),
+          ),
+          displaySmall: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
           ),
           labelLarge: const TextStyle(
-            fontSize: 20,
+            fontSize: 14,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
+          titleMedium: const TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
           bodySmall: const TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
@@ -57,7 +67,7 @@ class MainApp extends StatelessWidget {
             color: Colors.black,
           ),
           titleSmall: const TextStyle(
-            fontSize: 18,
+            fontSize: 24,
             fontWeight: FontWeight.w700,
             color: Color(0xFF0066FF),
           ),
@@ -72,4 +82,3 @@ class MainApp extends StatelessWidget {
     );
   }
 }
-
