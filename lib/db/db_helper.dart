@@ -22,7 +22,7 @@ class DBHelper {
     String path = join(await getDatabasesPath(), 'pmscontrole6.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
     );
   }
@@ -74,27 +74,27 @@ class DBHelper {
   )
   ''');
 
-    await db.execute('''
+       await db.execute('''
     CREATE TABLE produit (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    FournisseurId INTEGER NOT NULL,
-    TypeId INTEGER NOT NULL,
+    FournisseurId INTEGER,
+    TypeId INTEGER,
     Image VARCHAR(255),
-    Name VARCHAR(255) NOT NULL,
-    BarCode INTEGER NOT NULL,   
-    Quantite INTEGER NOT NULL,
-    QuantitePiece INTEGER NOT NULL,
-    Price DOUBLE NOT NULL,
+    Name VARCHAR(255),
+    BarCode INTEGER,   
+    Quantite INTEGER,
+    QuantitePiece INTEGER,
+    PrixAchat DOUBLE,
+    PrixVente DOUBLE,
     Discount INTEGER,
-    CategoryId INTEGER NOT NULL,
+    CategoryId INTEGER,
     Description VARCHAR(255),
-    ExpirationDate DATE NOT NULL,
+    ExpirationDate DATE,
     FOREIGN KEY (FournisseurId) REFERENCES fournisseur (id) ON DELETE CASCADE,
     FOREIGN KEY (CategoryId) REFERENCES category (id) ON DELETE CASCADE , 
     FOREIGN KEY (TypeId) REFERENCES Type (id) ON DELETE CASCADE
   )
   ''');
-
 
     await db.execute('''
   CREATE TABLE roles (

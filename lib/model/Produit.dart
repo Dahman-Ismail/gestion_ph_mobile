@@ -5,12 +5,14 @@ class Produit {
   String name;
   int barCode;
   int quantite;
-  double price;
+  double PrixAchat;
+  double PrixVente ;
   int discount;
   int categoryId;
+  int typeId;
   String description;
-  String expirrationDate;
-  int quantitePiece;
+  String expirationDate;
+  int quantitePiece; // New field
 
   Produit({
     this.id,
@@ -19,12 +21,14 @@ class Produit {
     required this.name,
     required this.barCode,
     required this.quantite,
-    required this.price,
+    required this.PrixAchat,
+    required this.PrixVente,
     required this.discount,
     required this.categoryId,
+    required this.typeId,
     required this.description,
-    required this.expirrationDate,
-    required this.quantitePiece,
+    required this.expirationDate,
+    required this.quantitePiece, // Initialize in constructor
   });
 
   Map<String, dynamic> toMap() {
@@ -35,12 +39,14 @@ class Produit {
       'Name': name,
       'BarCode': barCode,
       'Quantite': quantite,
-      'Price': price,
+      'PrixAchat': PrixAchat,
+      'PrixVente' : PrixVente ,
       'Discount': discount,
       'CategoryId': categoryId,
+      'TypeId': typeId,
       'Description': description,
-      'ExpirrationDate': expirrationDate,
-       'QuantitePiece': quantitePiece,
+      'ExpirationDate': expirationDate,
+      'QuantitePiece': quantitePiece, // Include quantitePiece in toMap()
     };
   }
 
@@ -52,12 +58,14 @@ class Produit {
       name: map['Name'],
       barCode: map['BarCode'],
       quantite: map['Quantite'],
-      price: map['Price'],
+      PrixAchat: map['PrixAchat'],
+      PrixVente: map['PrixVente'],
       discount: map['Discount'],
       categoryId: map['CategoryId'],
+      typeId: map['TypeId'],
       description: map['Description'],
-      expirrationDate: map['ExpirrationDate'],
-      quantitePiece: map['QuantitePiece'],
+      expirationDate: map['ExpirationDate'],
+      quantitePiece: map['QuantitePiece'], // Initialize quantitePiece in fromMap()
     );
   }
 }

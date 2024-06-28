@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'package:my_new_app/model/Users.dart';
 import 'package:my_new_app/screen/all_mployee_screen.dart'; 
-// import 'package:my_new_app/db/model/Users.dart';
 
 class EmployeeDashboardScreen extends StatefulWidget {
   const EmployeeDashboardScreen({Key? key}) : super(key: key);
@@ -39,7 +38,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(child: Text('No users found.')); // Show no data message
             } else {
-              return _buildContent(context, snapshot.data!);
+              // Limit the users to the first 4 entries
+              List<User> limitedUsers = snapshot.data!.take(4).toList();
+              return _buildContent(context, limitedUsers);
             }
           },
         ),
@@ -195,7 +196,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('2:30h'), // You can replace with actual hours if available
+                child: Text('2:30h'), // Placeholder for hours, replace with actual data if available
               ),
             ],
           );
@@ -224,7 +225,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  AllEmployeeScreen()),
+              MaterialPageRoute(builder: (context) => AllEmployeeScreen()),
             );
           },
           child: const Text(

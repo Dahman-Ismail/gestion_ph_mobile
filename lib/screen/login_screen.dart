@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'package:my_new_app/model/Users.dart';
+import 'package:my_new_app/screen/all_products_screen.dart';
 import 'package:my_new_app/screen/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'dashboard_screen.dart';
@@ -166,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                        MaterialPageRoute(builder: (context) =>  AllProductScreen()),
                       );
                     },
                     child: const Text('Login 2'),

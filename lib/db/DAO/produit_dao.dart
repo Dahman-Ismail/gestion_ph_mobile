@@ -12,7 +12,7 @@ class ProduitDao {
     final db = await _dbHelper.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
-      'produits',
+      'produit',
       where: 'barCode = ?',
       whereArgs: [barCode],
     );
