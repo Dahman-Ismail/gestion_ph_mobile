@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:my_new_app/db/DAO/fournisseur_dao.dart'; // Import your DAO here
+import 'package:my_new_app/db/DAO/Fournisseur_dao.dart';
 import 'package:my_new_app/model/Fournisseur.dart'; // Replace with the correct path to your Fournisseur model
 
 class AllSupplierScreen extends StatefulWidget {
-  const AllSupplierScreen({Key? key}) : super(key: key);
+  const AllSupplierScreen({super.key});
 
   @override
   State<AllSupplierScreen> createState() => _AllSupplierScreenState();
@@ -102,7 +101,6 @@ class _AllSupplierScreenState extends State<AllSupplierScreen> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No suppliers available.'));
           }
-
           final fournisseurs = snapshot.data!;
           return ListView.builder(
             itemCount: fournisseurs.length,
