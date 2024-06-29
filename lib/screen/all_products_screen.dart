@@ -77,9 +77,9 @@ class _AllProductScreenState extends State<AllProductScreen> {
                     Text(
                       'Price: \$${product.PrixVente.toStringAsFixed(2)}',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text('id: ${product.id}'),
                     Text('fournisseurId: ${product.fournisseurId}'),
                     Text('image: ${product.image}'),
