@@ -22,38 +22,44 @@ class _LoginScreenState extends State<LoginScreen> {
   bool hidePass = true;
 
   Future<void> _login(BuildContext context) async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-    String email = _emailController.text;
-    String password = _passwordController.text;
+  if (!_formKey.currentState!.validate()) {
+    return;
+  }
+  String email = _emailController.text;
+  String password = _passwordController.text;
 
-    // Check for SQL Injection attempts
-    if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid input detected.')),
+  // Check for SQL Injection attempts
+  if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid input detected.')),
+    );
+    return;
+  }
+
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userIP = prefs.getString('userIP'); 
+
+    // Fetch user 
+    String url = 'http://$userIP:8080/api/User/users';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      List<dynamic> users = json.decode(response.body);
+
+      // Validate user credentials
+      final user = users.firstWhere(
+        (user) => user['email'] == email && user['password'] == password,
+        orElse: () => null,
       );
-      return;
-    }
 
-    try {
-      // Fetch user data from the remote API
-      final response = await http.get(Uri.parse('http://192.168.1.106:8080/api/User/users'));
-
-      if (response.statusCode == 200) {
-        List<dynamic> users = json.decode(response.body);
-
-        // Validate user credentials
-        final user = users.firstWhere(
-          (user) => user['email'] == email && user['password'] == password,
-          orElse: () => null,
-        );
-
-        if (user != null) {
+      if (user != null) {
+        // Check if the user's roleid is 1
+        if (user['RoleId'] == 1) {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setBool('isLoggedIn', true);
 
-          // Initialize the LoginService
+          
           final loginService = LoginService();
 
           // Fetch and store data after successful login
@@ -73,21 +79,28 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         } else {
+          // User exists but roleid is not 1
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Invalid email or password')),
+            const SnackBar(content: Text('Access denied. Incorrect role.')),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to connect to the server')),
+          const SnackBar(content: Text('Invalid email or password')),
         );
       }
-    } catch (e) {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        const SnackBar(content: Text('Failed to connect to the server')),
       );
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error: $e')),
+    );
   }
+}
+
 
   bool _containsSqlInjection(String input) {
     final sqlInjectionPattern = RegExp(

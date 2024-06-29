@@ -255,7 +255,7 @@ Future<void> fetchAndStoreRoles() async {
   }
 
   bool _areFournisseursEqual(Fournisseur f1, Fournisseur f2) {
-    print("i am her idan kayen forni");
+    print("i am her so it is a  forni");
 
     return f1.name == f2.name &&
            f1.telephone == f2.telephone &&
@@ -266,7 +266,7 @@ Future<void> fetchAndStoreRoles() async {
   }
 
   bool _areTypesEqual(Type t1, Type t2) {
-    print("i am her idan kayen type");
+    print("i am her so it is a  type");
 
     return t1.name == t2.name &&
            t1.description == t2.description;
@@ -275,7 +275,7 @@ Future<void> fetchAndStoreRoles() async {
 
 
   bool _areOperationsEqual(Operation o1, Operation o2) {
-    print("i am her idan kayen operation");
+    print("i am her so it is a operation");
 
     return o1.userId == o2.userId &&
            o1.produitId == o2.produitId &&
@@ -285,7 +285,7 @@ Future<void> fetchAndStoreRoles() async {
   }
 
   bool _areRolesEqual(Role r1, Role r2) {
-    print("i am her idan kayen role");
+    print("i am her so is a role");
 
     return r1.role == r2.role &&
            r1.guardName == r2.guardName;
