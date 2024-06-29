@@ -1,29 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:my_new_app/db/DAO/user_dao.dart'; // Import your DAO here
-import 'package:my_new_app/model/Users.dart'; // Replace with the correct path to your User model
 
-class AllEmployeeScreen extends StatefulWidget {
-  const AllEmployeeScreen({super.key});
+import 'package:flutter/material.dart';
+import 'package:my_new_app/db/DAO/fournisseur_dao.dart'; // Import your DAO here
+import 'package:my_new_app/model/Fournisseur.dart'; // Replace with the correct path to your Fournisseur model
+
+class AllSupplierScreen extends StatefulWidget {
+  const AllSupplierScreen({Key? key}) : super(key: key);
 
   @override
-  State<AllEmployeeScreen> createState() => _AllEmployeeScreenState();
+  State<AllSupplierScreen> createState() => _AllSupplierScreenState();
 }
 
-class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
-  late Future<List<User>> _futureUsers;
+class _AllSupplierScreenState extends State<AllSupplierScreen> {
+  late Future<List<Fournisseur>> _futureFournisseurs;
 
   @override
   void initState() {
     super.initState();
-    _futureUsers = _fetchUsers(); // Fetching users asynchronously
+    _futureFournisseurs = _fetchFournisseurs(); // Fetching suppliers asynchronously
   }
 
-  Future<List<User>> _fetchUsers() async {
-    final userDao = UserDao(); // Instantiate your DAO
-    return await userDao.getUsers(); // Replace with your actual method to get users
+  Future<List<Fournisseur>> _fetchFournisseurs() async {
+    final fournisseurDao = FournisseurDao(); // Instantiate your DAO
+    return await fournisseurDao.getFournisseurs(); // Replace with your actual method to get suppliers
   }
 
-  void _showUserDetails(BuildContext context, User user) {
+  void _showFournisseurDetails(BuildContext context, Fournisseur fournisseur) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows the bottom sheet to be full-screen if needed
@@ -52,6 +53,7 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    // Optionally add an image if available
                     Center(
                       child: Image.network(
                         'https://via.placeholder.com/150', // Placeholder image URL
@@ -61,23 +63,18 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      user.name,
+                      fournisseur.name,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text('Email: ${user.email}'),
-                    if (user.emailVerifiedAt != null)
-                      Text('Email Verified At: ${user.emailVerifiedAt}'),
-                    Text('Role ID: ${user.roleId}'),
-                    if (user.rememberToken != null)
-                      Text('Remember Token: ${user.rememberToken}'),
-                    // if (user.createdAt != null)
-                    //   Text('Created At: ${user.createdAt}'),
-                    // if (user.updatedAt != null)
-                    //   Text('Updated At: ${user.updatedAt}'),
+                    Text('Telephone: ${fournisseur.telephone}'),
+                    Text('Email: ${fournisseur.email}'),
+                    Text('Pays: ${fournisseur.pays}'),
+                    Text('Ville: ${fournisseur.ville}'),
+                    Text('Adresse: ${fournisseur.adresse}'),
                     const SizedBox(height: 15),
                   ],
                 ),
@@ -93,32 +90,32 @@ class _AllEmployeeScreenState extends State<AllEmployeeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Employees'),
+        title: const Text('All Suppliers'),
       ),
-      body: FutureBuilder<List<User>>(
-        future: _futureUsers,
+      body: FutureBuilder<List<Fournisseur>>(
+        future: _futureFournisseurs,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No employees available.'));
+            return const Center(child: Text('No suppliers available.'));
           }
 
-          final users = snapshot.data!;
+          final fournisseurs = snapshot.data!;
           return ListView.builder(
-            itemCount: users.length,
+            itemCount: fournisseurs.length,
             itemBuilder: (context, index) {
-              final user = users[index];
+              final fournisseur = fournisseurs[index];
               return ListTile(
                 leading: const CircleAvatar(
                   backgroundImage: NetworkImage('https://via.placeholder.com/50'), // Placeholder image URL
                   radius: 25,
                 ),
-                title: Text(user.name),
-                subtitle: Text(user.email),
-                onTap: () => _showUserDetails(context, user),
+                title: Text(fournisseur.name),
+                subtitle: Text(fournisseur.email),
+                onTap: () => _showFournisseurDetails(context, fournisseur),
               );
             },
           );

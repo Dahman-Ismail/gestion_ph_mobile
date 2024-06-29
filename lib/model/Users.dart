@@ -6,8 +6,6 @@ class User {
   String password;
   int roleId;
   String? rememberToken;
-  String? createdAt;
-  String? updatedAt;
 
   User({
     this.id,
@@ -17,8 +15,6 @@ class User {
     required this.password,
     required this.roleId,
     this.rememberToken,
-    this.createdAt,
-    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,24 +24,20 @@ class User {
       'email': email,
       'email_verified_at': emailVerifiedAt,
       'password': password,
-      'roleId': roleId,
+      'RoleId': roleId,
       'remember_token': rememberToken,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id']!= null ? map['id'] as int : null,
+      id: map['id'],
       name: map['name'],
       email: map['email'],
       emailVerifiedAt: map['email_verified_at'],
       password: map['password'],
-      roleId: map['roleId'] != null ? map['roleId'] as int : 0,
+      roleId: map['RoleId'],
       rememberToken: map['remember_token'],
-      createdAt: map['created_at'],
-      updatedAt: map['updated_at'],
     );
   }
 }

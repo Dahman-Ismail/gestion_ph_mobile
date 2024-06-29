@@ -4,6 +4,23 @@ import 'package:my_new_app/model/Category.dart';
 class CategoryDao {
   final DBHelper _dbHelper = DBHelper();
 
+
+  Future<Category?> getCategoryById(int id) async {
+    final db = await _dbHelper.database;
+    List<Map<String, dynamic>> maps = await db.query(
+      'category', // Table name
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Category.fromMap(maps.first); // Convert the first result to a Category object
+    }
+
+    return null; // Return null if no category is found
+  }
+
+
   Future<int> insertCategory(Category category) async {
     final db = await _dbHelper.database;
     return await db.insert('category', category.toMap());

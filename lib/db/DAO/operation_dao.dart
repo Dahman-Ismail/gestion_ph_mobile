@@ -12,6 +12,21 @@ class OperationDao {
     return await db.insert('operation', operation.toMap());
   }
 
+   Future<Operation?> getOperationById(int id) async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'operation',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Operation.fromMap(maps.first);
+    } else {
+      return null; // Return null if no operation found with the given ID
+    }
+  }
+
   Future<List<Operation>> getOperations() async {
     final db = await _dbHelper.database;
     final List<Map<String, dynamic>> maps = await db.query('operation');

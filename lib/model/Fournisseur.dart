@@ -1,13 +1,11 @@
 class Fournisseur {
   int? id;
   String name;
-  int telephone;
+  String telephone;
   String email;
   String? pays;
   String? ville;
   String? adresse;
-  // String? createdAt;
-  // String? updatedAt;
 
   Fournisseur({
     this.id,
@@ -17,8 +15,6 @@ class Fournisseur {
     this.pays,
     this.ville,
     this.adresse,
-    // this.createdAt,
-    // this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,8 +26,6 @@ class Fournisseur {
       'Pays': pays,
       'Ville': ville,
       'Adresse': adresse,
-      // 'created_at': createdAt,
-      // 'updated_at': updatedAt,
     };
   }
 
@@ -40,12 +34,10 @@ class Fournisseur {
       id: map['id'],
       name: map['Name'] ?? '',
       telephone: map['Telephone'] ?? '',
-      email: map['email']?? '',
+      email: map['email'] ?? '',
       pays: map['Pays'],
       ville: map['Ville'],
-      adresse: map['Adresse']
-      // createdAt: map['created_at'],
-      // updatedAt: map['updated_at'],
+      adresse: map['Adresse'],
     );
   }
 }

@@ -31,7 +31,7 @@ class DBHelper {
     await db.execute('''
   CREATE TABLE category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name VARCHAR(255) NOT NULL UNIQUE,
+    Name VARCHAR(255),
     Description VARCHAR(255)
   )
   ''');
@@ -39,9 +39,9 @@ class DBHelper {
 
     await db.execute('''
       
-      CREATE TABLE Type (
+      CREATE TABLE Type  (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        Name VARCHAR(255) NOT NULL,
+        Name VARCHAR(255),
         Description VARCHAR(255)
       )
    
@@ -50,8 +50,8 @@ class DBHelper {
     await db.execute('''
      CREATE TABLE fournisseur (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name VARCHAR(255) NOT NULL,
-    Telephone VARCHAR(255) NOT NULL,
+    Name VARCHAR(255),
+    Telephone VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     Pays VARCHAR(255) ,
     Ville VARCHAR(255) ,
@@ -59,16 +59,16 @@ class DBHelper {
   )
   ''');
 
-    await db.execute('''
+       await db.execute('''
   CREATE TABLE operation (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    UserId INTEGER NOT NULL,
-    ProduitId INTEGER NOT NULL,
+    UserId INTEGER,
+    ProduitId INTEGER,
     Quantite INTEGER ,
     QuantitePiece INTEGER , 
     TypeOperation VARCHAR(255) , 
-    Nom VARCHAR(255) NOT NULL,
-    TotalPrice REAL NOT NULL,
+    Nom VARCHAR(255),
+    TotalPrice DOUBLE ,
     FOREIGN KEY (UserId) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (ProduitId) REFERENCES produit (id) ON DELETE CASCADE
   )
@@ -107,14 +107,12 @@ class DBHelper {
     await db.execute('''
   CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     email_verified_at TIMESTAMP,
-    password VARCHAR(255) NOT NULL,
-    RoleId INTEGER NOT NULL,
+    password VARCHAR(255),
+    RoleId INTEGER,
     remember_token VARCHAR(255),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
     FOREIGN KEY (RoleId) REFERENCES roles (id) ON DELETE CASCADE
   )
   ''');

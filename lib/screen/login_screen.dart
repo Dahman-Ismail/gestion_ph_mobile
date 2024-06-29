@@ -1,13 +1,16 @@
-// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:my_new_app/db/DAO/user_dao.dart';
-import 'package:my_new_app/model/Users.dart';
+import 'package:my_new_app/screen/allforni.dart';
 import 'package:my_new_app/screen/home_screen.dart';
+import 'package:my_new_app/screen/forgot_password_screen.dart';
+import 'package:my_new_app/service/loginservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'forgot_password_screen.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+// import 'package:my_new_app/services/login_service.dart'; // Import your LoginService
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -16,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final UserDao _userDao = UserDao();
+  bool hidePass = true;
 
   Future<void> _login(BuildContext context) async {
     if (!_formKey.currentState!.validate()) {
@@ -24,32 +27,64 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     String email = _emailController.text;
     String password = _passwordController.text;
+
+    // Check for SQL Injection attempts
     if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Invalid input detected.')),
       );
       return;
     }
-    User? user = await _userDao.getUserByEmail(email);
-    if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User not found')),
-      );
-      return;
-    }
-    bool isValidUser = await _userDao.validateUser(email, password);
 
-    if (isValidUser) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
+    try {
+      // Fetch user data from the remote API
+      final response = await http.get(Uri.parse('http://192.168.1.106:8080/api/User/users'));
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    } else {
+      if (response.statusCode == 200) {
+        List<dynamic> users = json.decode(response.body);
+
+        // Validate user credentials
+        final user = users.firstWhere(
+          (user) => user['email'] == email && user['password'] == password,
+          orElse: () => null,
+        );
+
+        if (user != null) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isLoggedIn', true);
+
+          // Initialize the LoginService
+          final loginService = LoginService();
+
+          // Fetch and store data after successful login
+          try {
+            await loginService.loginAndFetchData();
+
+            // After data is fetched and stored, navigate to the HomeScreen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          } catch (e) {
+            // Handle any errors during data fetch or storage
+            print('Error fetching or storing data: $e');
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to fetch or store data. Please try again.')),
+            );
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid email or password')),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to connect to the server')),
+        );
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid email or password')),
+        SnackBar(content: Text('Error: $e')),
       );
     }
   }
@@ -70,8 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     return null;
   }
-
-  bool hidePass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -180,11 +213,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: ElevatedButton(
                           onPressed: () => _login(context),
                           style: ButtonStyle(
-                              padding: WidgetStateProperty.all(
+                              padding: MaterialStateProperty.all(
                                   const EdgeInsets.symmetric(vertical: 12)),
                               backgroundColor:
-                                  WidgetStateProperty.all(ct.secondary),
-                              shape: WidgetStateProperty.all(
+                                  MaterialStateProperty.all(ct.secondary),
+                              shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
@@ -205,15 +238,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
+                                  builder: (context) => const AllSupplierScreen()),
                             );
                           },
                           style: ButtonStyle(
-                              padding: WidgetStateProperty.all(
+                              padding: MaterialStateProperty.all(
                                   const EdgeInsets.symmetric(vertical: 12)),
                               backgroundColor:
-                                  WidgetStateProperty.all(ct.secondary),
-                              shape: WidgetStateProperty.all(
+                                  MaterialStateProperty.all(ct.secondary),
+                              shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),

@@ -1,50 +1,10 @@
-// import 'package:flutter/material.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'screen/login_screen.dart';
-// import 'screen/dashboard_screen.dart'; 
-
-// class InitialScreen extends StatefulWidget {
-//   const InitialScreen({Key? key}) : super(key: key);
-
-//   @override
-//   _InitialScreenState createState() => _InitialScreenState();
-// }
-
-// class _InitialScreenState extends State<InitialScreen> {
-//   bool _isLoggedIn = false;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _checkLoginStatus();
-//   }
-
-//   Future<void> _checkLoginStatus() async {
-//     final prefs = await SharedPreferences.getInstance();
-//     final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-
-//     setState(() {
-//       _isLoggedIn = isLoggedIn;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (_isLoggedIn) {
-//       return const DashboardScreen();
-//     } else {
-//       return const LoginScreen();
-//     }
-//   }
-// }
-
-
 import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/produit_dao.dart';
 import 'package:my_new_app/db/DAO/user_dao.dart';
 import 'package:my_new_app/model/Produit.dart';
 import 'package:my_new_app/screen/home_screen.dart';
 import 'package:my_new_app/screen/login_screen.dart';
+import 'package:my_new_app/screen/ip_page.dart'; // Make sure to import your IPPage
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_new_app/model/Users.dart';
 
@@ -57,23 +17,22 @@ class InitialScreen extends StatefulWidget {
 
 class _InitialScreenState extends State<InitialScreen> {
   bool _isLoggedIn = false;
+  String? _ipAddress;
+
   final UserDao _userDao = UserDao();
   final ProduitDao _produitDao = ProduitDao();
 
- @override
-void initState() {
-  super.initState();
-  _checkLoginStatus();
-  _addTestUser().then((_) {
-  });
-  _addTestProduit().then((_) {
-  });
-}
-
-
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+    // _addTestUser().then((_) {});
+    // _addTestProduit().then((_) {});
+  }
 
   Future<void> _addTestUser() async {
     User testUser = User(
+      id: 10,
       name: 'Test33 User',
       email: 'test@example353.com',
       password: 'password123',
@@ -87,10 +46,9 @@ void initState() {
     } else {
       debugPrint("Test user already exists: ${existingUser.toMap()}");
     }
-}
+  }
 
-
-Future<void> _addTestProduit() async {
+  Future<void> _addTestProduit() async {
     Produit testProduit = Produit(
       id: 2,
       fournisseurId: 1,
@@ -104,7 +62,7 @@ Future<void> _addTestProduit() async {
       categoryId: 1,
       typeId: 1,
       description: 'Test product description',
-      expirationDate: '2024-12-31', // Correct the typo here
+      expirationDate: '2024-12-31',
       quantitePiece: 10,
     );
     print("Adding test product: ${testProduit.toMap()}");
@@ -120,18 +78,22 @@ Future<void> _addTestProduit() async {
   Future<void> _checkLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    final ipAddress = prefs.getString('userIP');
 
     setState(() {
       _isLoggedIn = isLoggedIn;
+      _ipAddress = ipAddress;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoggedIn) {
-      return const HomeScreen();
+    if (_ipAddress == null || _ipAddress!.isEmpty) {
+      return IPPage();
+    } else if (!_isLoggedIn) {
+      return  const LoginScreen(); 
     } else {
-      return const LoginScreen();
+      return const HomeScreen();
     }
   }
 }
