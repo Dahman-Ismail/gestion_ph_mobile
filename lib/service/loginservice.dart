@@ -51,6 +51,7 @@ class LoginService {
       List<dynamic> productsJson = json.decode(response.body);
       List<Produit> products = productsJson.map((json) => Produit.fromMap(json)).toList();
 
+
       for (var product in products) {
         final existingProduct = await productDao.getProductByBarCode(product.barCode);
 
@@ -75,6 +76,7 @@ class LoginService {
     if (response.statusCode == 200) {
       List<dynamic> usersJson = json.decode(response.body);
       List<User> users = usersJson.map((json) => User.fromMap(json)).toList();
+
 
       for (var user in users) {
         final existingUser = await userDao.getUserByEmail(user.email);

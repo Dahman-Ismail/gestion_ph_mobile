@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:network_info_plus/network_info_plus.dart';
 
 class IPPage extends StatefulWidget {
+  const IPPage({super.key});
+
   @override
   _IPPageState createState() => _IPPageState();
 }
@@ -43,7 +45,7 @@ class _IPPageState extends State<IPPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userIP', _ipController.text);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('IP Address saved!')),
+      const SnackBar(content: Text('IP Address saved!')),
     );
     Navigator.pushReplacement(
       context,
@@ -60,7 +62,7 @@ class _IPPageState extends State<IPPage> {
       _storedIP = '';
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('IP Address deleted!')),
+      const SnackBar(content: Text('IP Address deleted!')),
     );
   }
 
@@ -68,7 +70,7 @@ class _IPPageState extends State<IPPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Save IP Address'),
+        title: const Text('Save IP Address'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -76,21 +78,21 @@ class _IPPageState extends State<IPPage> {
           children: <Widget>[
             TextField(
               controller: _ipController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'IP Address',
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   onPressed: _saveIP,
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
                 ElevatedButton(
                   onPressed: _deleteIP,
-                  child: Text('Delete'),
+                  child: const Text('Delete'),
                 ),
               ],
             ),
