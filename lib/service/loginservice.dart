@@ -279,10 +279,8 @@ Future<void> fetchAndStoreRoles() async {
   bool _areOperationsEqual(Operation o1, Operation o2) {
     print("i am her so it is a operation");
 
-    return o1.userId == o2.userId &&
-           o1.produitId == o2.produitId &&
-           o1.nom == o2.nom &&
-           o1.totalPrice == o2.totalPrice ;
+    return o1.id == o2.id &&
+           o1.TotalPrice == o2.TotalPrice ;
           
   }
 

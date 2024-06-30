@@ -1,6 +1,6 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-// import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DBHelper {
   static final DBHelper _instance = DBHelper._internal();
@@ -19,10 +19,10 @@ class DBHelper {
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'pmscontrole6.db');
+    String path = join(await getDatabasesPath(), 'pmscontrole.db');
     return await openDatabase(
       path,
-      version: 2,
+      version: 1,
       onCreate: _onCreate,
     );
   }
@@ -39,7 +39,7 @@ class DBHelper {
 
     await db.execute('''
       
-      CREATE TABLE Type  (
+      CREATE TABLE Type (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         Name VARCHAR(255),
         Description VARCHAR(255)
@@ -59,22 +59,14 @@ class DBHelper {
   )
   ''');
 
-       await db.execute('''
+    await db.execute('''
   CREATE TABLE operation (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    UserId INTEGER,
-    ProduitId INTEGER,
-    Quantite INTEGER ,
-    QuantitePiece INTEGER , 
-    TypeOperation VARCHAR(255) , 
-    Nom VARCHAR(255),
-    TotalPrice DOUBLE ,
-    FOREIGN KEY (UserId) REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (ProduitId) REFERENCES produit (id) ON DELETE CASCADE
+    TotalPrice DOUBLE
   )
   ''');
 
-       await db.execute('''
+    await db.execute('''
     CREATE TABLE produit (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     FournisseurId INTEGER,
@@ -95,6 +87,7 @@ class DBHelper {
     FOREIGN KEY (TypeId) REFERENCES Type (id) ON DELETE CASCADE
   )
   ''');
+
 
     await db.execute('''
   CREATE TABLE roles (
