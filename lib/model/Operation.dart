@@ -1,35 +1,23 @@
 class Operation {
   int? id;
-  int userId;
-  int produitId;
-  String nom;
-  double totalPrice;
+  double TotalPrice;
 
   Operation({
     this.id,
-    required this.userId,
-    required this.produitId,
-    required this.nom,
-    required this.totalPrice,
+    required this.TotalPrice,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'UserId': userId,
-      'ProduitId': produitId,
-      'Nom': nom,
-      'TotalPrice': totalPrice,
+      'TotalPrice': TotalPrice,
     };
   }
 
   factory Operation.fromMap(Map<String, dynamic> map) {
     return Operation(
       id: map['id'],
-      userId: map['UserId'],
-      produitId: map['ProduitId'],
-      nom: map['Nom'],
-      totalPrice: map['TotalPrice'],
+      TotalPrice: map['TotalPrice'],
     );
   }
 }
