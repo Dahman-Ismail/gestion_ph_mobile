@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // Handle any errors during data fetch or storage
             print('Error fetching or storing data: $e');
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Failed to fetch or store data. Please try again.')),
+              const SnackBar(content: Text('Failed to fetch or store data. Please try again.')),
             );
           }
         } else {
@@ -226,11 +226,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: ElevatedButton(
                           onPressed: () => _login(context),
                           style: ButtonStyle(
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   const EdgeInsets.symmetric(vertical: 12)),
                               backgroundColor:
-                                  MaterialStateProperty.all(ct.secondary),
-                              shape: MaterialStateProperty.all(
+                                  WidgetStateProperty.all(ct.secondary),
+                              shape: WidgetStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
@@ -255,11 +255,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           style: ButtonStyle(
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   const EdgeInsets.symmetric(vertical: 12)),
                               backgroundColor:
-                                  MaterialStateProperty.all(ct.secondary),
-                              shape: MaterialStateProperty.all(
+                                  WidgetStateProperty.all(ct.secondary),
+                              shape: WidgetStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),

@@ -89,7 +89,7 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     if (_ipAddress == null || _ipAddress!.isEmpty) {
-      return IPPage();
+      return const IPPage();
     } else if (!_isLoggedIn) {
       return  const LoginScreen(); 
     } else {
