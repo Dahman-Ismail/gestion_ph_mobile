@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/screen/allforni.dart';
 import 'package:my_new_app/screen/home_screen.dart';
 import 'package:my_new_app/screen/forgot_password_screen.dart';
 import 'package:my_new_app/service/loginservice.dart';
@@ -22,85 +21,85 @@ class _LoginScreenState extends State<LoginScreen> {
   bool hidePass = true;
 
   Future<void> _login(BuildContext context) async {
-  if (!_formKey.currentState!.validate()) {
-    return;
-  }
-  String email = _emailController.text;
-  String password = _passwordController.text;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    String email = _emailController.text;
+    String password = _passwordController.text;
 
-  // Check for SQL Injection attempts
-  if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Invalid input detected.')),
-    );
-    return;
-  }
-
-  try {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userIP = prefs.getString('userIP'); 
-
-    // Fetch user 
-    String url = 'http://$userIP:8080/api/User/users';
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      List<dynamic> users = json.decode(response.body);
-
-      // Validate user credentials
-      final user = users.firstWhere(
-        (user) => user['email'] == email && user['password'] == password,
-        orElse: () => null,
+    // Check for SQL Injection attempts
+    if (_containsSqlInjection(email) || _containsSqlInjection(password)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid input detected.')),
       );
+      return;
+    }
 
-      if (user != null) {
-        // Check if the user's roleid is 1
-        if (user['RoleId'] == 1) {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setBool('isLoggedIn', true);
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userIP = prefs.getString('userIP');
 
-          
-          final loginService = LoginService();
+      // Fetch user
+      String url = 'http://$userIP:8080/api/User/users';
+      final response = await http.get(Uri.parse(url));
 
-          // Fetch and store data after successful login
-          try {
-            await loginService.loginAndFetchData();
+      if (response.statusCode == 200) {
+        List<dynamic> users = json.decode(response.body);
 
-            // After data is fetched and stored, navigate to the HomeScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } catch (e) {
-            // Handle any errors during data fetch or storage
-            print('Error fetching or storing data: $e');
+        // Validate user credentials
+        final user = users.firstWhere(
+          (user) => user['email'] == email && user['password'] == password,
+          orElse: () => null,
+        );
+
+        if (user != null) {
+          // Check if the user's roleid is 1
+          if (user['RoleId'] == 1) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setBool('isLoggedIn', true);
+
+            final loginService = LoginService();
+
+            // Fetch and store data after successful login
+            try {
+              await loginService.loginAndFetchData();
+
+              // After data is fetched and stored, navigate to the HomeScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            } catch (e) {
+              // Handle any errors during data fetch or storage
+              print('Error fetching or storing data: $e');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text(
+                        'Failed to fetch or store data. Please try again.')),
+              );
+            }
+          } else {
+            // User exists but roleid is not 1
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Failed to fetch or store data. Please try again.')),
+              const SnackBar(content: Text('Access denied. Incorrect role.')),
             );
           }
         } else {
-          // User exists but roleid is not 1
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Access denied. Incorrect role.')),
+            const SnackBar(content: Text('Invalid email or password')),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid email or password')),
+          const SnackBar(content: Text('Failed to connect to the server')),
         );
       }
-    } else {
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to connect to the server')),
+        SnackBar(content: Text('Error: $e')),
       );
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: $e')),
-    );
   }
-}
-
 
   bool _containsSqlInjection(String input) {
     final sqlInjectionPattern = RegExp(
@@ -168,10 +167,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   controller: _emailController,
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black),
                   decoration: const InputDecoration(
-                    labelText: 'Your Email',
-                    border: OutlineInputBorder(),
-                  ),
+                      border: OutlineInputBorder(),
+                      labelText: 'Your Email',
+                      labelStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black)),
                   validator: _validateEmail,
                 ),
                 const SizedBox(height: 20),
@@ -180,9 +186,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   textInputAction: TextInputAction.done,
                   controller: _passwordController,
                   obscureText: hidePass,
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black),
                   decoration: InputDecoration(
-                    labelText: 'Your Password',
                     border: const OutlineInputBorder(),
+                    labelText: 'Your Password',
+                    labelStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black),
                     suffixIcon: IconButton(
                       icon: Icon(hidePass
                           ? Icons.visibility_off
@@ -239,35 +253,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
                               "Login",
-                              style: tt.bodyMedium,
-                            ),
-                          ))),
-                ]),
-                const SizedBox(height: 10),
-                Row(children: [
-                  Expanded(
-                      child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const AllSupplierScreen()),
-                            );
-                          },
-                          style: ButtonStyle(
-                              padding: WidgetStateProperty.all(
-                                  const EdgeInsets.symmetric(vertical: 12)),
-                              backgroundColor:
-                                  WidgetStateProperty.all(ct.secondary),
-                              shape: WidgetStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 4.0),
-                            child: Text(
-                              "Home Page",
                               style: tt.bodyMedium,
                             ),
                           ))),

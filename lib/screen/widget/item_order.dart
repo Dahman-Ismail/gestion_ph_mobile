@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ItemDisp extends StatelessWidget {
-  const ItemDisp({
+class ItemOrder extends StatelessWidget {
+  const ItemOrder({
     required this.n,
-    required this.name,
-    required this.quantity,
-    required this.price,
+    required this.totalPrice,
+    required this.date,
     super.key,
   });
   final String n;
-  final String name;
-  final String quantity;
-  final String price;
+  final String totalPrice;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +45,17 @@ class ItemDisp extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 12),
               child: Text(
-                name,
+                totalPrice,
                 style: tt.bodySmall,
               ),
             ),
           ),
           SizedBox(
-            width: mq.width * 0.18,
+            width: mq.width * 0.5,
             child: Padding(
               padding: const EdgeInsets.only(left: 12),
               child: Text(
-                quantity,
-                style: tt.bodySmall,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: mq.width * 0.30,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12),
-              child: Text(
-                price,
+                date,
                 style: tt.bodySmall,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,

@@ -27,7 +27,6 @@ class _IPPageState extends State<IPPage> {
       _storedIP = prefs.getString('userIP') ?? '';
       _ipController.text = _storedIP;
     });
-    
   }
 
   // Fetch local IP address using network_info_plus
@@ -68,6 +67,7 @@ class _IPPageState extends State<IPPage> {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme ct = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Save IP Address'),
@@ -78,21 +78,51 @@ class _IPPageState extends State<IPPage> {
           children: <Widget>[
             TextField(
               controller: _ipController,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black),
               decoration: const InputDecoration(
-                labelText: 'IP Address',
-              ),
+                  border: OutlineInputBorder(),
+                  labelText: 'IP Address',
+                  labelStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black)),
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: _saveIP,
-                  child: const Text('Save'),
-                ),
-                ElevatedButton(
-                  onPressed: _deleteIP,
-                  child: const Text('Delete'),
+                  onPressed: _saveIP, // Call _logout function
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 148),
+                    ),
+                    backgroundColor: WidgetStateProperty.all(ct.primary),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.logout_outlined,
+                        color: ct.surface,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 4.0),
+                        child: Text(
+                          "Save",
+                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

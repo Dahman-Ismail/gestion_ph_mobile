@@ -3,7 +3,15 @@
 import 'package:flutter/material.dart';
 
 class HomeChart extends StatefulWidget {
-  const HomeChart({super.key});
+  const HomeChart({
+    super.key,
+    required this.dates,
+    required this.listAVG,
+    required this.mainAVG,
+  });
+  final List<String> dates;
+  final List<double> listAVG;
+  final double mainAVG;
 
   @override
   State<HomeChart> createState() => _HomeChartState();
@@ -25,24 +33,45 @@ class _HomeChartState extends State<HomeChart> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "+ 3.5%",
+            "Weekly analysis",
             style: tt.titleSmall,
           ),
           Text(
-            "Compared to the last week",
+            "as ${widget.mainAVG} = 100%",
             style: tt.displaySmall,
           ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              chartElement(ct, 124, "Mon"),
-              chartElement(ct, 189, "Tus"),
-              chartElement(ct, 89, "Wed"),
-              chartElement(ct, 102, "Thu"),
-              chartElement(ct, 178, "Fri"),
-              chartElement(ct, 100, "Sat"),
-              chartElement(ct, 10, "Sun"),
+              chartElement(
+                  ct,
+                  widget.listAVG[4] * 2 > 200 ? 200 : widget.listAVG[4] * 2,
+                  widget.dates[6]),
+              chartElement(
+                  ct,
+                  widget.listAVG[3] * 2 > 200 ? 200 : widget.listAVG[3] * 2,
+                  widget.dates[5]),
+              chartElement(
+                  ct,
+                  widget.listAVG[2] * 2 > 200 ? 200 : widget.listAVG[2] * 2,
+                  widget.dates[4]),
+              chartElement(
+                  ct,
+                  widget.listAVG[1] * 2 > 200 ? 200 : widget.listAVG[1] * 2,
+                  widget.dates[3]),
+              chartElement(
+                  ct,
+                  widget.listAVG[0] * 2 > 200 ? 200 : widget.listAVG[0] * 2,
+                  widget.dates[2]),
+              chartElement(
+                  ct,
+                  widget.listAVG[5] * 2 > 200 ? 200 : widget.listAVG[5] * 2,
+                  widget.dates[1]),
+              chartElement(
+                  ct,
+                  widget.listAVG[6] * 2 > 200 ? 200 : widget.listAVG[6] * 2,
+                  widget.dates[0]),
             ],
           )
         ],

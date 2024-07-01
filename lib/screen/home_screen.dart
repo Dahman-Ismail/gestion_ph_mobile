@@ -8,7 +8,8 @@ import 'dashboard_screen.dart';
 // import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.page});
+  final int? page;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -28,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.page ?? 0;
   }
 
   @override
@@ -54,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 146, 75, 75),
-        unselectedItemColor: const Color.fromARGB(137, 221, 8, 8),
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.blueGrey,
         backgroundColor:
             const Color(0xFF0084FF), // The blue color from your image
         onTap: _onItemTapped,

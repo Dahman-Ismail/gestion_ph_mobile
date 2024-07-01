@@ -59,10 +59,11 @@ class DBHelper {
   )
   ''');
 
-    await db.execute('''
+        await db.execute('''
   CREATE TABLE operation (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    TotalPrice DOUBLE
+    TotalPrice DOUBLE , 
+    date DATE 
   )
   ''');
 

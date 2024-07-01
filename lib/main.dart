@@ -32,15 +32,10 @@ class MainApp extends StatelessWidget {
             surface: Colors.white,
             onSurface: Colors.black),
         textTheme: GoogleFonts.rubikTextTheme(textTheme).copyWith(
-          labelSmall: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black.withOpacity(0.6)),
+          labelSmall: const TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black),
           labelMedium: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color.fromARGB(255, 153, 145, 145),
-          ),
+              fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
           displaySmall: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
@@ -51,15 +46,30 @@ class MainApp extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
+          headlineMedium: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            color: Colors.black,
+          ),
           titleMedium: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
+          bodyLarge: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
           bodySmall: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Colors.black,
+          ),
+          headlineLarge: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
           ),
           bodyMedium: const TextStyle(
             fontSize: 18,
