@@ -15,27 +15,32 @@ class _AllSupplierScreenState extends State<AllSupplierScreen> {
   @override
   void initState() {
     super.initState();
-    _futureFournisseurs = _fetchFournisseurs(); // Fetching suppliers asynchronously
+    _futureFournisseurs =
+        _fetchFournisseurs(); // Fetching suppliers asynchronously
   }
 
   Future<List<Fournisseur>> _fetchFournisseurs() async {
     final fournisseurDao = FournisseurDao(); // Instantiate your DAO
-    return await fournisseurDao.getFournisseurs(); // Replace with your actual method to get suppliers
+    return await fournisseurDao
+        .getFournisseurs(); // Replace with your actual method to get suppliers
   }
 
   void _showFournisseurDetails(BuildContext context, Fournisseur fournisseur) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Allows the bottom sheet to be full-screen if needed
+      isScrollControlled:
+          true, // Allows the bottom sheet to be full-screen if needed
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.5, // Initial height as a fraction of screen height
+          initialChildSize:
+              0.5, // Initial height as a fraction of screen height
           minChildSize: 0.3, // Minimum height as a fraction of screen height
           maxChildSize: 0.8, // Maximum height as a fraction of screen height
           expand: false, // Do not expand to full screen initially
           builder: (context, scrollController) {
             return SingleChildScrollView(
-              controller: scrollController, // Allows for scrolling inside the bottom sheet
+              controller:
+                  scrollController, // Allows for scrolling inside the bottom sheet
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -53,12 +58,10 @@ class _AllSupplierScreenState extends State<AllSupplierScreen> {
                     ),
                     const SizedBox(height: 20),
                     // Optionally add an image if available
-                    Center(
-                      child: Image.network(
-                        'https://via.placeholder.com/150', // Placeholder image URL
-                        height: 150,
-                        width: 150,
-                      ),
+                    const Icon(
+                      Icons.person_2_sharp,
+                      color: Colors.blueAccent,
+                      size: 34,
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -89,7 +92,10 @@ class _AllSupplierScreenState extends State<AllSupplierScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Suppliers'),
+        title: Text(
+          'All Suppliers',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
       ),
       body: FutureBuilder<List<Fournisseur>>(
         future: _futureFournisseurs,
@@ -107,9 +113,10 @@ class _AllSupplierScreenState extends State<AllSupplierScreen> {
             itemBuilder: (context, index) {
               final fournisseur = fournisseurs[index];
               return ListTile(
-                leading: const CircleAvatar(
-                  backgroundImage: NetworkImage('https://via.placeholder.com/50'), // Placeholder image URL
-                  radius: 25,
+                leading: const Icon(
+                  Icons.person_2_sharp,
+                  color: Colors.blueAccent,
+                  size: 34,
                 ),
                 title: Text(fournisseur.name),
                 subtitle: Text(fournisseur.email),

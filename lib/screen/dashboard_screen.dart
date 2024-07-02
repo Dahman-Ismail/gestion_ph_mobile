@@ -8,6 +8,7 @@ import 'package:my_new_app/screen/home_screen.dart';
 import 'package:my_new_app/screen/list_orders.dart';
 import 'package:my_new_app/screen/widget/item_order.dart';
 import 'package:my_new_app/service/loginservice.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:fl_chart/fl_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -170,12 +171,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   //   }
   // }
   bool isReload = false;
+  Future<double?> _getStoredDouble() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('storedDouble');
+  }
+
+  Future<void> _loadStoredDouble() async {
+    final double? storedDouble = await _getStoredDouble();
+    setState(() {
+      mainAvg = storedDouble ?? 10000;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _fetchOrders();
     _getPreviousDays();
+    _loadStoredDouble();
   }
 
   @override

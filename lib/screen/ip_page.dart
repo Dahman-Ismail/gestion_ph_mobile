@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:network_info_plus/network_info_plus.dart';
 
 class IPPage extends StatefulWidget {
   const IPPage({super.key});
@@ -13,6 +12,7 @@ class IPPage extends StatefulWidget {
 class _IPPageState extends State<IPPage> {
   final TextEditingController _ipController = TextEditingController();
   String _storedIP = "";
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -29,27 +29,19 @@ class _IPPageState extends State<IPPage> {
     });
   }
 
-  // Fetch local IP address using network_info_plus
-  // Future<void> _fetchLocalIPAddress() async {
-  //   final info = NetworkInfo();
-  //   String? localIP = await info.getWifiIP(); // Get the local IPv4 address
-
-  //   setState(() {
-  //     _ipController.text = localIP ?? 'Failed to get IP address';
-  //   });
-  // }
-
   // Save the current IP address to shared preferences
   Future<void> _saveIP() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userIP', _ipController.text);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('IP Address saved!')),
-    );
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-    );
+    if (_formKey.currentState?.validate() ?? false) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userIP', _ipController.text);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('IP Address saved!')),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    }
   }
 
   // Remove the saved IP address from shared preferences
@@ -65,6 +57,22 @@ class _IPPageState extends State<IPPage> {
     );
   }
 
+  String? _validateIP(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an IP address';
+    }
+
+    final ipPattern =
+        r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$';
+    final regExp = RegExp(ipPattern);
+
+    if (!regExp.hasMatch(value)) {
+      return 'Please enter a valid IPv4 address';
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme ct = Theme.of(context).colorScheme;
@@ -74,59 +82,64 @@ class _IPPageState extends State<IPPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              controller: _ipController,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'IP Address',
-                  labelStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _saveIP, // Call _logout function
-                  style: ButtonStyle(
-                    padding: WidgetStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 148),
-                    ),
-                    backgroundColor: WidgetStateProperty.all(ct.primary),
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: _ipController,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'IP Address',
+                    labelStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Color.fromARGB(255, 221, 186, 186))),
+                validator: _validateIP,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: _saveIP, // Call _logout function
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 148),
                       ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.logout_outlined,
-                        color: ct.surface,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "Save",
-                          style: TextStyle(fontSize: 14, color: Colors.white),
+                      backgroundColor: MaterialStateProperty.all(ct.primary),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
-                    ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.logout_outlined,
+                          color: ct.surface,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            "Save",
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

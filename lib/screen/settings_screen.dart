@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/db/DAO/produit_dao.dart';
 import 'package:my_new_app/screen/about.dart';
-import 'package:my_new_app/screen/account.dart';
+import 'package:my_new_app/screen/allforni.dart';
 import 'package:my_new_app/screen/login_screen.dart';
 import 'package:my_new_app/service/theme_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +23,64 @@ class MyApp extends StatelessWidget {
       home: SettingsScreen(),
     );
   }
+}
+
+Future<void> _showDoubleInputDialog(BuildContext context) async {
+  final TextEditingController _doubleController = TextEditingController();
+
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // User must tap a button
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Enter a value'),
+        content: TextField(
+          style: TextStyle(color: Colors.black),
+          controller: _doubleController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          decoration: const InputDecoration(
+            labelText: 'Double value',
+            hintText: 'Enter a number',
+            hintStyle: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('Save'),
+            onPressed: () async {
+              if (_doubleController.text.isNotEmpty) {
+                final double? value = double.tryParse(_doubleController.text);
+                if (value != null) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setDouble('storedDouble', value);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Value saved!')),
+                  );
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Please enter a valid number')),
+                  );
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Field cannot be empty')),
+                );
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class SettingsScreen extends StatelessWidget {
@@ -62,17 +120,22 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(
+          'Settings',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
         backgroundColor: primaryColor, // Use primary color from theme
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
           ListTile(
-            leading: const CircleAvatar(
-              backgroundImage: NetworkImage('https://example.com/user.jpg'),
+            leading: const Icon(
+              Icons.person_2_sharp,
+              color: Colors.blueAccent,
+              size: 34,
             ),
-            title: const Text('Ryan Sabaaresh'),
+            title: const Text('User Settings'),
             subtitle: const Text('Edit Profile'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
@@ -89,32 +152,32 @@ class SettingsScreen extends StatelessWidget {
           //   },
           // ),
           ListTile(
-            leading: const Icon(Icons.download),
-            title: const Text('Downloads'),
-            trailing: const Icon(Icons.arrow_forward_ios),
+            leading: const Icon(Icons.update),
+            title: const Text('Update Chart'),
             onTap: () {
-              // Handle downloads tap
+              _showDoubleInputDialog(context);
             },
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.account_circle),
-            title: const Text('Account'),
+            title: const Text('Supplier'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const Account()),
+                MaterialPageRoute(
+                    builder: (context) => const AllSupplierScreen()),
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.notifications),
-            title: const Text('Notifications'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              // Handle notifications tap
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.notifications),
+          //   title: const Text('Notifications'),
+          //   trailing: const Icon(Icons.arrow_forward_ios),
+          //   onTap: () {
+          //     // Handle notifications tap
+          //   },
+          // ),
           // ListTile(
           //   leading: const Icon(Icons.lock),
           //   title: const Text('Privacy & Security'),
@@ -123,17 +186,37 @@ class SettingsScreen extends StatelessWidget {
           //     // Handle privacy & security tap
           //   },
           // ),
+          // ListTile(
+          //   leading: const Icon(Icons.light_mode),
+          //   title: const Text('Theme Switch'),
+          //   trailing: const Icon(Icons.arrow_forward_ios),
+          //   onTap: () async {
+          //     await _themeService.switchTheme();
+          //   },
+          // ),
           ListTile(
-            leading: const Icon(Icons.light_mode),
-            title: const Text('Theme Switch'),
+            leading: const Icon(Icons.info),
+            title: const Text('About'),
             trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () async {
-              await _themeService.switchTheme();
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const About()),
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.info),
-            title: const Text('About'),
+            title: const Text('Term of use'),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const About()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: const Text('Privacy policy'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.of(context).push(

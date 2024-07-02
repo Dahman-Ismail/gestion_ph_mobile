@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/screen/home_screen.dart';
 import 'package:my_new_app/screen/forgot_password_screen.dart';
+import 'package:my_new_app/screen/ip_page.dart';
 import 'package:my_new_app/service/loginservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -215,30 +216,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordScreen()),
-                      );
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.pinkAccent,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 20),
                 Row(children: [
                   Expanded(
                       child: ElevatedButton(
                           onPressed: () => _login(context),
+                          style: ButtonStyle(
+                              padding: WidgetStateProperty.all(
+                                  const EdgeInsets.symmetric(vertical: 12)),
+                              backgroundColor:
+                                  WidgetStateProperty.all(ct.primary),
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              "Login",
+                              style: tt.bodyLarge,
+                            ),
+                          ))),
+                ]),
+                const SizedBox(height: 20),
+                Row(children: [
+                  Expanded(
+                      child: ElevatedButton(
+                          onPressed: () => {
+                                Navigator.pushReplacement(
+                                  // ignore: use_build_context_synchronously
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const IPPage()),
+                                )
+                              },
                           style: ButtonStyle(
                               padding: WidgetStateProperty.all(
                                   const EdgeInsets.symmetric(vertical: 12)),
@@ -252,7 +264,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              "Login",
+                              "Change IP Address",
                               style: tt.bodyMedium,
                             ),
                           ))),
